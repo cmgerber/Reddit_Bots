@@ -20,7 +20,7 @@ def get_posts(post_text, subreddit):
 
     for submission in subreddit.get_new():
         #if the submission is over a day old don't include it
-        if (time.time() - submission.created_tutc)/(60*60) > 24:
+        if (time.time() - submission.created_utc)/(60*60) > 24:
             continue
         if submission.short_link not in post_text:
             new_post_list.append(submission.short_link)
@@ -77,7 +77,10 @@ def main():
     email_text = create_email_text(keyterms, post_text, new_post_list)
 
     #send the email
-    Send_Email.main(email_text, ['colin.gerber@gmail.com'])
+    if len(email_text) == 0:
+        print 'Nothing new :('
+    else:
+        Send_Email.main(email_text, ['colin.gerber@gmail.com'])
 
     #save the newly updated post dict
     pickle.save_object(post_text, 'post_text.pkl')
