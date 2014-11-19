@@ -55,3 +55,4 @@ target/
 
 # configs
 config.py
+config*
