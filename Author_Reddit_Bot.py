@@ -58,7 +58,11 @@ def main():
     r = praw.Reddit(user_agent = user_agent)
 
     #add a subreddit to look at
-    subreddit = r.get_subreddit("printsf")
+    subreddit1 = r.get_subreddit("printsf")
+    subreddit2 = r.get_subreddit("scifi")
+
+    #subreddit list
+    sub_list = [subreddit1, subreddit2]
 
     #load previous post text
     post_text = pickle.open_object('post_text.pkl')
@@ -66,15 +70,23 @@ def main():
     #if the submission is over a week old delete it
     post_text = remove_old_posts(post_text)
 
-    #update the post_text dict with new posts
-    post_text, new_post_list = get_posts(post_text, subreddit)
+    #create a variable to store all new posts
+    tot_new_post_list = []
+    #loop through subreddits
+    for sub in sub_list:
+
+        #update the post_text dict with new posts
+        post_text, new_post_list = get_posts(post_text, sub)
+
+        #add new posts to tot list
+        tot_new_post_list += new_post_list
 
     #keyterms to look for
     keyterms = ['Bujold', 'Asimov', 'Hamilton', 'Gibson',
                 'Reynolds', 'Stephenson', 'Scalzi']
 
     #create email text
-    email_text = create_email_text(keyterms, post_text, new_post_list)
+    email_text = create_email_text(keyterms, post_text, tot_new_post_list)
 
     #send the email
     if len(email_text) == 0:
