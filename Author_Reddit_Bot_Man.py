@@ -96,15 +96,15 @@ def main():
 
     #send the email
     if len(email_text) == 0:
-        pass
-        #print 'Nothing new :('
+        print 'Nothing new :('
     else:
         Send_Email.main(email_text, ['colin.gerber@gmail.com'])
+        print 'Email Sent'
 
     #save the newly updated post dict
     pickle.save_object(post_text, '/Users/colingerber/Documents/Programming/Personal/Reddit_Bots/post_text.pkl')
 
-    #print 'Bot complete'
+    print 'Bot complete'
 
 
 if __name__ == '__main__':

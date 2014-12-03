@@ -56,7 +56,7 @@ def main(email_text, recipients):
     smtp ='smtp.gmail.com:587'
     send_mail(send_from, send_to, subject, text, smtp, files)
 
-    print 'Email Sent'
+    #print 'Email Sent'
 
 if __name__ == "__main__":
     main()
